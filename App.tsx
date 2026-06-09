@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Property, SiteSettings } from './types';
 import { INITIAL_PROPERTIES, DEFAULT_SETTINGS } from './constants';
-import { supabase, adminSupabase } from './services/supabaseClient';
+import { supabase } from './services/supabaseClient';
 import { PropertyCard } from './components/PropertyCard';
 import { PropertyAdmin } from './components/PropertyAdmin';
 import { PropertyDetailsModal } from './components/PropertyDetailsModal';
@@ -22,6 +22,8 @@ const App: React.FC = () => {
   const [selectedProperty, setSelectedProperty] = useState<Property | null>(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [passwordInput, setPasswordInput] = useState('');
+  // Held in memory only after a successful login; sent with each admin write.
+  const [adminPassword, setAdminPassword] = useState('');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [loginError, setLoginError] = useState(false);
 
@@ -94,33 +96,51 @@ const App: React.FC = () => {
     }
   }, [settings.externalScripts]);
 
+  // All admin writes go through the password-protected /api/admin/* routes.
+  const adminFetch = (url: string, method: string, body?: unknown) =>
+    fetch(url, {
+      method,
+      headers: { 'Content-Type': 'application/json', 'x-admin-password': adminPassword },
+      ...(body !== undefined ? { body: JSON.stringify(body) } : {}),
+    });
+
   const addProperty = async (newProperty: Property) => {
-    const { error } = await adminSupabase.from('properties').insert(newProperty);
-    if (!error) setProperties((prev: Property[]) => [newProperty, ...prev]);
+    const res = await adminFetch('/api/admin/properties', 'POST', newProperty);
+    if (res.ok) setProperties((prev: Property[]) => [newProperty, ...prev]);
   };
 
   const updateProperty = async (updated: Property) => {
-    const { created_at, ...data } = updated;
-    const { error } = await adminSupabase.from('properties').upsert(data, { onConflict: 'id' });
-    if (!error) setProperties((prev: Property[]) => prev.map((p: Property) => p.id === updated.id ? updated : p));
+    const res = await adminFetch('/api/admin/properties', 'PUT', updated);
+    if (res.ok) setProperties((prev: Property[]) => prev.map((p: Property) => p.id === updated.id ? updated : p));
   };
 
   const deleteProperty = async (id: string) => {
-    const { error } = await adminSupabase.from('properties').delete().eq('id', id);
-    if (!error) setProperties((prev: Property[]) => prev.filter((p: Property) => p.id !== id));
+    const res = await adminFetch(`/api/admin/properties?id=${encodeURIComponent(id)}`, 'DELETE');
+    if (res.ok) setProperties((prev: Property[]) => prev.filter((p: Property) => p.id !== id));
   };
 
   const updateSettings = async (newSettings: SiteSettings) => {
-    const { error } = await adminSupabase.from('settings').upsert({ id: 1, data: newSettings });
-    if (!error) setSettings(newSettings);
+    const res = await adminFetch('/api/admin/settings', 'POST', newSettings);
+    if (res.ok) setSettings(newSettings);
   };
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (passwordInput === 'cedarcreek') {
-      setIsAuthenticated(true);
-      setLoginError(false);
-    } else {
+    try {
+      const res = await fetch('/api/admin/verify', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ password: passwordInput }),
+      });
+      if (res.ok) {
+        setAdminPassword(passwordInput);
+        setIsAuthenticated(true);
+        setLoginError(false);
+      } else {
+        setLoginError(true);
+        setTimeout(() => setLoginError(false), 2000);
+      }
+    } catch {
       setLoginError(true);
       setTimeout(() => setLoginError(false), 2000);
     }
@@ -673,7 +693,7 @@ const App: React.FC = () => {
               <form onSubmit={handleLogin} className="space-y-6">
                 <input 
                   type="password" 
-                  placeholder="Password (cedarcreek)"
+                  placeholder="Password"
                   className={`w-full p-4 border rounded-xl outline-none text-center text-xl transition-all ${loginError ? 'border-red-500' : 'border-neutral-200'}`}
                   value={passwordInput}
                   onChange={e => setPasswordInput(e.target.value)}
@@ -690,7 +710,8 @@ const App: React.FC = () => {
               onDelete={deleteProperty}
               settings={settings}
               onUpdateSettings={updateSettings}
-              onLogout={() => { setIsAuthenticated(false); setPasswordInput(''); }}
+              adminPassword={adminPassword}
+              onLogout={() => { setIsAuthenticated(false); setPasswordInput(''); setAdminPassword(''); }}
             />
           )}
         </main>

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Property, PropertyStatus, SiteSettings, LocalSpot } from '../types';
 import { Layout, Settings, Edit2, Trash2, X, Sun, LogOut, Plus, Save, CheckCircle, Zap, Star, MapPin, Upload, Loader2 } from 'lucide-react';
-import { adminSupabase } from '../services/supabaseClient';
+import { supabase } from '../services/supabaseClient';
 
 interface PropertyAdminProps {
   properties: Property[];
@@ -10,16 +10,18 @@ interface PropertyAdminProps {
   onDelete: (id: string) => void;
   settings: SiteSettings;
   onUpdateSettings: (settings: SiteSettings) => void;
+  adminPassword: string;
   onLogout: () => void;
 }
 
-export const PropertyAdmin: React.FC<PropertyAdminProps> = ({ 
-  properties, 
-  onAdd, 
+export const PropertyAdmin: React.FC<PropertyAdminProps> = ({
+  properties,
+  onAdd,
   onUpdate,
-  onDelete, 
-  settings, 
+  onDelete,
+  settings,
   onUpdateSettings,
+  adminPassword,
   onLogout
 }) => {
   const [activeTab, setActiveTab] = useState<'inventory' | 'settings' | 'lifestyle'>('inventory');
@@ -51,10 +53,18 @@ export const PropertyAdmin: React.FC<PropertyAdminProps> = ({
 
   const uploadImage = async (file: File, folder: string): Promise<string | null> => {
     const ext = file.name.split('.').pop() || 'jpg';
-    const filename = `${folder}/${Date.now()}.${ext}`;
-    const { error } = await adminSupabase.storage.from('images').upload(filename, file, { upsert: true });
+    // 1. Ask the server (which holds the service key) for a signed upload URL.
+    const res = await fetch('/api/admin/upload-url', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'x-admin-password': adminPassword },
+      body: JSON.stringify({ folder, ext }),
+    });
+    if (!res.ok) { console.error('Failed to get upload URL:', await res.text()); return null; }
+    const { path, token, publicUrl } = await res.json();
+    // 2. Upload the file straight to storage using the one-time signed token.
+    const { error } = await supabase.storage.from('images').uploadToSignedUrl(path, token, file);
     if (error) { console.error('Upload error:', error); return null; }
-    return adminSupabase.storage.from('images').getPublicUrl(filename).data.publicUrl;
+    return publicUrl;
   };
 
   const handleUpload = async (file: File, folder: string, fieldKey: string, onUrl: (url: string) => void) => {
