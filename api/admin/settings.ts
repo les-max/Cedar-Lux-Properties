@@ -1,5 +1,5 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { admin, requireAdmin } from '../../server/admin';
+import { admin, requireAdmin } from '../../server/admin.js';
 
 // Site settings upsert (single row, id = 1). Service-role write, password-gated.
 export default async function handler(req: VercelRequest, res: VercelResponse) {

@@ -1,5 +1,5 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { admin, requireAdmin } from '../../server/admin';
+import { admin, requireAdmin } from '../../server/admin.js';
 
 // Property writes (insert / upsert / delete). All run with the service-role key
 // on the server and require the admin password header.

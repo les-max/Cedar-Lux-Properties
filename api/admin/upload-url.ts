@@ -1,5 +1,5 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { admin, requireAdmin } from '../../server/admin';
+import { admin, requireAdmin } from '../../server/admin.js';
 
 // Issues a short-lived signed upload URL for the images bucket. The browser
 // uploads the file directly to that URL (so large photos never pass through the
