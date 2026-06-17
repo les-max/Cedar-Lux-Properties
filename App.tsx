@@ -6,6 +6,8 @@ import { PropertyCard } from './components/PropertyCard';
 import { PropertyAdmin } from './components/PropertyAdmin';
 import { PropertyDetailsModal } from './components/PropertyDetailsModal';
 import { ContactForm } from './components/ContactForm';
+import { EmeraldBayPage } from './components/EmeraldBayPage';
+import { CedarCreekLakePage } from './components/CedarCreekLakePage';
 import {
   Menu, X,
   ArrowRight, Quote, Search, ChevronLeft,
@@ -18,7 +20,7 @@ const App: React.FC = () => {
   const [settings, setSettings] = useState<SiteSettings>(DEFAULT_SETTINGS);
   const [isLoading, setIsLoading] = useState(true);
 
-  const [view, setView] = useState<'home' | 'admin' | 'listings' | 'lifestyle' | 'about' | 'contact'>('home');
+  const [view, setView] = useState<'home' | 'admin' | 'listings' | 'lifestyle' | 'about' | 'contact' | 'emerald-bay' | 'cedar-creek-lake'>('home');
   const [selectedProperty, setSelectedProperty] = useState<Property | null>(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [passwordInput, setPasswordInput] = useState('');
@@ -81,6 +83,93 @@ const App: React.FC = () => {
     }
     setMeta('og:title', `${settings.companyName} | Cedar Creek Lake Custom Homes`);
   }, [settings.socialImage, settings.companyName]);
+
+  // Inject JSON-LD schema + update page title/description per view
+  useEffect(() => {
+    const existing = document.getElementById('cedar-lux-jsonld');
+    if (existing) existing.remove();
+
+    const businessSchema = {
+      '@context': 'https://schema.org',
+      '@type': 'HomeAndConstructionBusiness',
+      name: 'Cedar Lux Properties',
+      url: 'https://cedarluxproperties.com',
+      telephone: settings.phone || '972-764-8687',
+      email: settings.email || 'info@cedarluxproperties.com',
+      address: {
+        '@type': 'PostalAddress',
+        addressLocality: 'Mabank',
+        addressRegion: 'TX',
+        addressCountry: 'US',
+      },
+      description: 'Custom luxury home builder on Cedar Creek Lake, Texas. Specializing in waterfront homes and spec builds at Emerald Bay and across Cedar Creek Lake.',
+      areaServed: 'Cedar Creek Lake, Texas',
+      knowsAbout: ['Custom Home Building', 'Waterfront Homes', 'Luxury Construction', 'Cedar Creek Lake', 'Emerald Bay'],
+    };
+
+    type SchemaObject = Record<string, unknown>;
+    let schemas: SchemaObject[] = [businessSchema];
+
+    const metas: { title: string; description: string } = {
+      title: `${settings.companyName || 'Cedar Lux Properties'} | Cedar Creek Lake Custom Homes`,
+      description: 'Bespoke lakefront custom homes on Cedar Creek Lake, Texas. Just 60 minutes from Dallas.',
+    };
+
+    if (view === 'emerald-bay') {
+      metas.title = 'Emerald Bay Custom Homes | Cedar Lux Properties | Cedar Creek Lake';
+      metas.description = 'Custom luxury homes in Emerald Bay at Cedar Creek Lake, Texas. Cedar Lux Properties builds bespoke waterfront residences in one of Cedar Creek Lake\'s most prestigious communities.';
+      schemas = [
+        businessSchema,
+        {
+          '@context': 'https://schema.org',
+          '@type': 'WebPage',
+          name: 'Emerald Bay Custom Homes — Cedar Creek Lake',
+          url: 'https://cedarluxproperties.com',
+          description: metas.description,
+          breadcrumb: {
+            '@type': 'BreadcrumbList',
+            itemListElement: [
+              { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://cedarluxproperties.com' },
+              { '@type': 'ListItem', position: 2, name: 'Emerald Bay' },
+            ],
+          },
+        },
+      ];
+    } else if (view === 'cedar-creek-lake') {
+      metas.title = 'Cedar Creek Lake Custom Home Builder | Cedar Lux Properties';
+      metas.description = 'Cedar Lux Properties is a custom home builder on Cedar Creek Lake, Texas — 60 minutes from Dallas. Luxury waterfront homes, spec builds, and bespoke construction at Emerald Bay and beyond.';
+      schemas = [
+        businessSchema,
+        {
+          '@context': 'https://schema.org',
+          '@type': 'WebPage',
+          name: 'Cedar Creek Lake Custom Home Builder',
+          url: 'https://cedarluxproperties.com',
+          description: metas.description,
+          breadcrumb: {
+            '@type': 'BreadcrumbList',
+            itemListElement: [
+              { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://cedarluxproperties.com' },
+              { '@type': 'ListItem', position: 2, name: 'Cedar Creek Lake Custom Homes' },
+            ],
+          },
+        },
+      ];
+    }
+
+    // Inject JSON-LD
+    const script = document.createElement('script');
+    script.id = 'cedar-lux-jsonld';
+    script.type = 'application/ld+json';
+    script.text = JSON.stringify(schemas.length === 1 ? schemas[0] : schemas);
+    document.head.appendChild(script);
+
+    // Update title and description
+    document.title = metas.title;
+    let descEl = document.querySelector('meta[name="description"]') as HTMLMetaElement | null;
+    if (!descEl) { descEl = document.createElement('meta'); descEl.setAttribute('name', 'description'); document.head.appendChild(descEl); }
+    descEl.content = metas.description;
+  }, [view, settings.phone, settings.email, settings.companyName]);
 
   // Inject External Scripts (Analytics, etc.)
   useEffect(() => {
@@ -445,8 +534,8 @@ const App: React.FC = () => {
                 {[
                   { value: '60', unit: 'min', label: 'From Dallas' },
                   { value: 'Deep', unit: '', label: 'Water Lake' },
-                  { value: 'Gated', unit: '', label: 'Master-Planned' },
-                  { value: '18', unit: 'hole', label: 'Golf Access' },
+                  { value: 'Deep', unit: '', label: 'Water Access' },
+                  { value: 'Golf', unit: '', label: 'Nearby' },
                 ].map(stat => (
                   <div key={stat.label}>
                     <p className="text-luxury-gold font-black mb-1">
@@ -471,7 +560,7 @@ const App: React.FC = () => {
                     Cedar Creek Lake sits just 60 minutes southeast of Dallas — close enough for a Friday afternoon escape, far enough to feel like a world away. With deep, clean water and a growing community of full-time residents, it has become the destination of choice for families who want more than a vacation home.
                   </p>
                   <p className="text-neutral-500 text-lg leading-relaxed mb-10">
-                    Emerald Bay at Cedar Creek Lake brings together the best of both: gated privacy, deep-water access, championship golf, and infrastructure built for year-round living.
+                    Emerald Bay at Cedar Creek Lake brings together the best of both: deep-water access, waterfront living, nearby golf and dining, and infrastructure built for year-round use.
                   </p>
                   <button onClick={() => setView('contact')} className="px-10 py-4 border-2 border-lake text-lake font-bold rounded-full hover:bg-lake hover:text-white transition-[background-color,color,transform] duration-150 ease-out active:scale-[0.97] uppercase tracking-widest text-xs">
                     Start the Conversation
@@ -498,7 +587,7 @@ const App: React.FC = () => {
               <div className="text-center mb-16">
                 <span className="text-xs font-bold uppercase tracking-[0.4em] text-luxury-gold mb-4 block">The Area</span>
                 <h2 className="text-5xl font-bold serif italic mb-4">Life Around the Lake</h2>
-                <p className="text-neutral-500 max-w-2xl mx-auto text-lg">From waterfront dining to championship golf, everything you need is within minutes of your front door.</p>
+                <p className="text-neutral-500 max-w-2xl mx-auto text-lg">From waterfront dining to golf and marina access, the best of lake living is minutes from your front door.</p>
               </div>
 
               <div className="flex flex-wrap gap-3 justify-center mb-12">
@@ -687,6 +776,24 @@ const App: React.FC = () => {
         </main>
       )}
 
+      {view === 'emerald-bay' && (
+        <EmeraldBayPage
+          phone={settings.phone}
+          email={settings.email}
+          companyName={settings.companyName}
+          onContact={() => setView('contact')}
+        />
+      )}
+
+      {view === 'cedar-creek-lake' && (
+        <CedarCreekLakePage
+          phone={settings.phone}
+          companyName={settings.companyName}
+          onContact={() => setView('contact')}
+          onEmeraldBay={() => setView('emerald-bay')}
+        />
+      )}
+
       {view === 'admin' && (
         <main className="flex-1 pt-40 pb-24 px-6 bg-neutral-100 flex items-center justify-center page-enter">
           {!isAuthenticated ? (
@@ -745,12 +852,14 @@ const App: React.FC = () => {
                </div>
                <p className="text-neutral-400 text-xs font-medium max-w-xs uppercase tracking-wider">Unrivaled lakefront masterpieces for the discerning Texan.</p>
             </div>
-            <div className="flex gap-8 text-neutral-400">
+            <div className="flex flex-wrap gap-6 text-neutral-400 justify-center">
                <button onClick={() => setView('home')} className="hover:text-lake transition-colors text-xs font-bold uppercase tracking-widest">Home</button>
                <button onClick={() => setView('about')} className="hover:text-lake transition-colors text-xs font-bold uppercase tracking-widest">About</button>
                <button onClick={() => setView('listings')} className="hover:text-lake transition-colors text-xs font-bold uppercase tracking-widest">Collection</button>
                <button onClick={() => setView('lifestyle')} className="hover:text-lake transition-colors text-xs font-bold uppercase tracking-widest">Lifestyle</button>
                <button onClick={() => setView('contact')} className="hover:text-lake transition-colors text-xs font-bold uppercase tracking-widest">Contact</button>
+               <button onClick={() => setView('emerald-bay')} className="hover:text-lake transition-colors text-xs font-bold uppercase tracking-widest">Emerald Bay</button>
+               <button onClick={() => setView('cedar-creek-lake')} className="hover:text-lake transition-colors text-xs font-bold uppercase tracking-widest">Cedar Creek Lake</button>
             </div>
             <div className="text-center md:text-right">
                <p className="text-neutral-400 text-[10px] uppercase font-bold tracking-widest mb-2">Contact</p>
