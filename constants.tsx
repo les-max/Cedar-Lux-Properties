@@ -116,7 +116,7 @@ export const DEFAULT_SETTINGS: SiteSettings = {
     },
     {
       "id": "9",
-      "category": "Attraction",
+      "category": "Dining",
       "title": "Seven Points Waterfront",
       "description": "A lively lakeside town with casual waterfront dining, boat rentals, and easy access to the southern shores of Cedar Creek Lake.",
       "image": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&q=80&w=2070",
