@@ -781,7 +781,7 @@ const App: React.FC = () => {
           phone={settings.phone}
           email={settings.email}
           companyName={settings.companyName}
-          heroImage={settings.lifestyleHeroImage}
+          heroImage={settings.emeraldBayHeroImage || settings.lifestyleHeroImage}
           onContact={() => setView('contact')}
         />
       )}
@@ -790,7 +790,7 @@ const App: React.FC = () => {
         <CedarCreekLakePage
           phone={settings.phone}
           companyName={settings.companyName}
-          heroImage={settings.heroImage}
+          heroImage={settings.cedarCreekLakeHeroImage || settings.heroImage}
           onContact={() => setView('contact')}
           onEmeraldBay={() => setView('emerald-bay')}
         />

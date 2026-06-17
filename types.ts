@@ -74,6 +74,8 @@ export interface SiteSettings {
   highlevelPipelineId: string;
   highlevelPipelineStageId: string;
   notificationEmail: string;
+  emeraldBayHeroImage: string;
+  cedarCreekLakeHeroImage: string;
 }
 
 export interface ChatMessage {

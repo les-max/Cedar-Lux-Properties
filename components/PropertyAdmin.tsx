@@ -523,6 +523,32 @@ export const PropertyAdmin: React.FC<PropertyAdminProps> = ({
                       </label>
                     </div>
                  </div>
+                 <div className="space-y-2">
+                    <label className="text-xs font-bold uppercase text-neutral-400">Emerald Bay Page — Hero Image</label>
+                    <div className="flex gap-2">
+                      <input className="flex-1 p-3 border rounded-xl" placeholder="Upload or paste URL" value={tempSettings.emeraldBayHeroImage || ''} onChange={e => setTempSettings({...tempSettings, emeraldBayHeroImage: e.target.value})} />
+                      <label className="cursor-pointer px-4 py-3 bg-lake text-white rounded-xl flex items-center gap-1.5 text-sm font-bold flex-shrink-0 hover:bg-neutral-800 transition-colors">
+                        {uploadingField === 'emeraldBayHeroImage' ? <Loader2 size={15} className="animate-spin" /> : <Upload size={15} />}
+                        <input type="file" accept="image/*" className="sr-only" onChange={e => { if (e.target.files?.[0]) handleUpload(e.target.files[0], 'settings', 'emeraldBayHeroImage', url => setTempSettings(s => ({...s, emeraldBayHeroImage: url}))); e.target.value = ''; }} />
+                      </label>
+                    </div>
+                    {tempSettings.emeraldBayHeroImage && (
+                      <img src={tempSettings.emeraldBayHeroImage} className="mt-2 rounded-xl w-full max-w-sm h-36 object-cover border border-neutral-200" alt="Emerald Bay hero preview" />
+                    )}
+                 </div>
+                 <div className="space-y-2">
+                    <label className="text-xs font-bold uppercase text-neutral-400">Cedar Creek Lake Page — Hero Image</label>
+                    <div className="flex gap-2">
+                      <input className="flex-1 p-3 border rounded-xl" placeholder="Upload or paste URL" value={tempSettings.cedarCreekLakeHeroImage || ''} onChange={e => setTempSettings({...tempSettings, cedarCreekLakeHeroImage: e.target.value})} />
+                      <label className="cursor-pointer px-4 py-3 bg-lake text-white rounded-xl flex items-center gap-1.5 text-sm font-bold flex-shrink-0 hover:bg-neutral-800 transition-colors">
+                        {uploadingField === 'cedarCreekLakeHeroImage' ? <Loader2 size={15} className="animate-spin" /> : <Upload size={15} />}
+                        <input type="file" accept="image/*" className="sr-only" onChange={e => { if (e.target.files?.[0]) handleUpload(e.target.files[0], 'settings', 'cedarCreekLakeHeroImage', url => setTempSettings(s => ({...s, cedarCreekLakeHeroImage: url}))); e.target.value = ''; }} />
+                      </label>
+                    </div>
+                    {tempSettings.cedarCreekLakeHeroImage && (
+                      <img src={tempSettings.cedarCreekLakeHeroImage} className="mt-2 rounded-xl w-full max-w-sm h-36 object-cover border border-neutral-200" alt="Cedar Creek Lake hero preview" />
+                    )}
+                 </div>
                  <div className="col-span-1 md:col-span-2 space-y-2">
                     <label className="text-xs font-bold uppercase text-neutral-400">Social Media Photo</label>
                     <div className="flex gap-2">

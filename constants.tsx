@@ -141,7 +141,9 @@ export const DEFAULT_SETTINGS: SiteSettings = {
   "highlevelMessageFieldKey": "",
   "highlevelPipelineId": "",
   "highlevelPipelineStageId": "",
-  "notificationEmail": ""
+  "notificationEmail": "",
+  "emeraldBayHeroImage": "",
+  "cedarCreekLakeHeroImage": ""
 };
 
 export const INITIAL_PROPERTIES: Property[] = [
