@@ -275,7 +275,6 @@ const App: React.FC = () => {
             <button onClick={() => setView('home')} className={`text-xs font-bold tracking-[0.2em] uppercase transition-colors ${view === 'home' ? 'text-luxury-gold' : 'text-neutral-600 hover:text-lake'}`}>Home</button>
             <button onClick={() => setView('about')} className={`text-xs font-bold tracking-[0.2em] uppercase transition-colors ${view === 'about' ? 'text-luxury-gold' : 'text-neutral-600 hover:text-lake'}`}>About</button>
             <button onClick={() => setView('listings')} className={`text-xs font-bold tracking-[0.2em] uppercase transition-colors ${view === 'listings' ? 'text-luxury-gold' : 'text-neutral-600 hover:text-lake'}`}>Collection</button>
-            <button onClick={() => setView('lifestyle')} className={`text-xs font-bold tracking-[0.2em] uppercase transition-colors ${view === 'lifestyle' ? 'text-luxury-gold' : 'text-neutral-600 hover:text-lake'}`}>Lifestyle</button>
             <button onClick={() => setView('contact')} className={`text-xs font-bold tracking-[0.2em] uppercase transition-colors ${view === 'contact' ? 'text-luxury-gold' : 'text-neutral-600 hover:text-lake'}`}>Contact</button>
           </div>
 
@@ -291,7 +290,6 @@ const App: React.FC = () => {
           <button onClick={() => { setView('home'); setIsMenuOpen(false); }} className="text-3xl font-bold serif text-left">Home</button>
           <button onClick={() => { setView('about'); setIsMenuOpen(false); }} className="text-3xl font-bold serif text-left">About Us</button>
           <button onClick={() => { setView('listings'); setIsMenuOpen(false); }} className="text-3xl font-bold serif text-left">The Collection</button>
-          <button onClick={() => { setView('lifestyle'); setIsMenuOpen(false); }} className="text-3xl font-bold serif text-left">Lifestyle</button>
           <button onClick={() => { setView('contact'); setIsMenuOpen(false); }} className="text-3xl font-bold serif text-left">Contact</button>
           <div className="mt-auto flex gap-6 text-neutral-400">
             <Instagram size={24} /> <Facebook size={24} />
@@ -700,22 +698,28 @@ const App: React.FC = () => {
               );
             })()}
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-              {filteredProperties.length > 0 ? (
-                filteredProperties.map(property => (
-                  <PropertyCard 
-                    key={property.id} 
-                    property={property} 
-                    onViewDetails={setSelectedProperty}
-                  />
-                ))
-              ) : (
-                <div className="col-span-full py-40 text-center">
-                   <Search size={48} className="mx-auto text-neutral-200 mb-6" />
-                   <h3 className="text-2xl font-bold serif italic">No properties found</h3>
+            {filteredProperties.length > 0 ? (
+              <>
+                <div className="mb-10">
+                  <p className="text-[10px] font-black uppercase tracking-[0.3em] text-luxury-gold mb-2">Available Homes</p>
+                  <h2 className="text-3xl font-bold serif italic text-lake">Homes You Can Buy Today</h2>
                 </div>
-              )}
-            </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+                  {filteredProperties.map(property => (
+                    <PropertyCard
+                      key={property.id}
+                      property={property}
+                      onViewDetails={setSelectedProperty}
+                    />
+                  ))}
+                </div>
+              </>
+            ) : (
+              <div className="py-40 text-center">
+                <Search size={48} className="mx-auto text-neutral-200 mb-6" />
+                <h3 className="text-2xl font-bold serif italic">No properties found</h3>
+              </div>
+            )}
           </div>
         </main>
       )}
@@ -858,7 +862,6 @@ const App: React.FC = () => {
                <button onClick={() => setView('home')} className="hover:text-lake transition-colors text-xs font-bold uppercase tracking-widest">Home</button>
                <button onClick={() => setView('about')} className="hover:text-lake transition-colors text-xs font-bold uppercase tracking-widest">About</button>
                <button onClick={() => setView('listings')} className="hover:text-lake transition-colors text-xs font-bold uppercase tracking-widest">Collection</button>
-               <button onClick={() => setView('lifestyle')} className="hover:text-lake transition-colors text-xs font-bold uppercase tracking-widest">Lifestyle</button>
                <button onClick={() => setView('contact')} className="hover:text-lake transition-colors text-xs font-bold uppercase tracking-widest">Contact</button>
                <button onClick={() => setView('emerald-bay')} className="hover:text-lake transition-colors text-xs font-bold uppercase tracking-widest">Emerald Bay</button>
                <button onClick={() => setView('cedar-creek-lake')} className="hover:text-lake transition-colors text-xs font-bold uppercase tracking-widest">Cedar Creek Lake</button>

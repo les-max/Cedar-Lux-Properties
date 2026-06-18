@@ -23,11 +23,11 @@ export const PropertyDetailsModal: React.FC<PropertyDetailsModalProps> = ({ prop
 
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-8 bg-black/80 backdrop-blur-sm animate-modal-backdrop">
-      <div className="relative w-full max-w-6xl h-full max-h-[90vh] bg-white rounded-[2.5rem] overflow-hidden flex flex-col md:flex-row shadow-2xl animate-modal-content">
-        <button onClick={onClose} className="absolute top-6 right-6 z-10 p-2 bg-neutral-100 rounded-full hover:bg-neutral-200 transition-[background-color,transform] duration-150 ease-out active:scale-[0.97]">
+      <div className="relative w-full max-w-3xl h-full max-h-[90vh] bg-white rounded-[2.5rem] overflow-hidden flex flex-col shadow-2xl animate-modal-content">
+        <button onClick={onClose} className="absolute top-6 right-6 z-10 p-2 bg-black/40 rounded-full hover:bg-black/60 transition-[background-color,transform] duration-150 ease-out active:scale-[0.97] text-white">
           <X size={24} />
         </button>
-        <div className="w-full md:w-3/5 bg-neutral-900 flex flex-col overflow-hidden">
+        <div className="w-full bg-neutral-900 flex flex-col" style={{height: '52%', minHeight: '260px', flexShrink: 0}}>
           <div className="relative flex-1 overflow-hidden">
             <img src={images[activeImageIndex]} className="w-full h-full object-cover" alt={property.title} />
             {images.length > 1 && (
@@ -58,7 +58,7 @@ export const PropertyDetailsModal: React.FC<PropertyDetailsModalProps> = ({ prop
             </div>
           )}
         </div>
-        <div className="flex-1 overflow-y-auto p-8 md:p-12">
+        <div className="flex-1 overflow-y-auto p-8">
           <div className="flex justify-between items-start mb-4">
             <h2 className="text-4xl font-bold serif">{property.title}</h2>
           </div>
