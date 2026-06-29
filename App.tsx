@@ -348,17 +348,9 @@ const App: React.FC = () => {
               <div className="flex-1">
                 <h2 className="text-5xl font-medium serif italic mb-8">{settings.lifestyleHeadline}</h2>
                 <p className="text-neutral-400 text-xl font-light mb-12 leading-relaxed">{settings.lifestyleSubheadline}</p>
-                <button onClick={() => setView('lifestyle')} className="px-10 py-4 border-2 border-luxury-gold text-luxury-gold font-bold rounded-full hover:bg-luxury-gold hover:text-white transition-[background-color,color,transform] duration-150 ease-out active:scale-[0.97] uppercase tracking-widest text-xs">
-                  Discover Lake Life
-                </button>
               </div>
               <div className="flex-1 relative">
-                 <img src={settings.lifestyleImage} className="rounded-3xl shadow-2xl h-[500px] w-full object-cover" alt="Lake Life" />
-                 <div className="absolute -bottom-8 -left-8 bg-luxury-gold p-8 rounded-2xl max-w-xs shadow-xl hidden lg:block">
-                    <Quote className="text-white/20 mb-4" size={32} />
-                    <p className="text-lg font-bold italic serif mb-4 leading-tight">"{settings.lifestyleQuote}"</p>
-                    <p className="text-xs uppercase tracking-widest font-black">— {settings.lifestyleQuoteAuthor}</p>
-                 </div>
+                 <img src={settings.lifestyleImage} className="rounded-3xl shadow-2xl h-[500px] w-full object-cover" alt="Cedar Creek Lake" />
               </div>
             </div>
           </section>
@@ -509,7 +501,8 @@ const App: React.FC = () => {
         </main>
       )}
 
-      {view === 'lifestyle' && (
+      {/* Lifestyle page hidden — kept for future use */}
+      {false && view === 'lifestyle' && (
         <main className="flex-1 page-enter">
 
           {/* Hero — image anchored, text at bottom-left */}

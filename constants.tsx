@@ -11,7 +11,7 @@ export const DEFAULT_SETTINGS: SiteSettings = {
   "lifestyleHeroSubheadline": "The perfect balance of adrenaline-fueled adventure and serene lakeside tranquility, just 60 minutes from Dallas.",
   "lifestyleHeadline": "Elevate Your Lakeside Living.",
   "lifestyleSubheadline": "Unrivaled access, proximity to Dallas, and turn-key luxury for the discerning homeowner looking for a legacy retreat.",
-  "lifestyleImage": "https://images.unsplash.com/photo-1512918728675-ed5a9ecdebfd?auto=format&fit=crop&q=80&w=2070",
+  "lifestyleImage": "https://lwcpnamisjdenfkbpbpt.supabase.co/storage/v1/object/public/images/properties/1778777778773.webp",
   "lifestyleQuote": "It's more than a home; it's a legacy of summer memories for our children and grandchildren.",
   "lifestyleQuoteAuthor": "The Thompson Family, Dallas TX",
   "activities": [
