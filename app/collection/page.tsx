@@ -60,7 +60,9 @@ export default async function CollectionPage({
               </div>
             </div>
             <div className="md:w-1/2 bg-white p-10 md:p-14 flex flex-col justify-center">
-              <p className="text-[10px] font-black uppercase tracking-[0.3em] text-luxury-gold mb-3">{featured.neighborhood}</p>
+              {featured.neighborhood && (
+                <p className="text-[10px] font-black uppercase tracking-[0.3em] text-luxury-gold mb-3">{featured.neighborhood}</p>
+              )}
               <h2 className="text-3xl md:text-4xl font-bold serif italic text-lake mb-2">{featured.title}</h2>
               {featured.address && <p className="text-neutral-400 text-sm font-medium mb-6">{featured.address}</p>}
               <FeaturedFacts featured={featured} />
