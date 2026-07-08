@@ -16,12 +16,6 @@ export const getProperties = unstable_cache(
         .from('properties')
         .select('*')
         .order('created_at', { ascending: false });
-      console.log('DIAG getProperties', JSON.stringify({
-        hasUrl: !!process.env.VITE_SUPABASE_URL,
-        urlHead: (process.env.VITE_SUPABASE_URL || 'MISSING').slice(0, 24),
-        count: data?.length ?? null,
-        err: error?.message ?? null,
-      }));
       if (error) throw error;
       if (data && data.length > 0) return data as Property[];
     } catch (e) {
