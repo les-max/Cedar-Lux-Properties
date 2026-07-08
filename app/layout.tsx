@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { GoogleAnalytics } from '@next/third-parties/google';
 import { Plus_Jakarta_Sans, Playfair_Display, Cinzel } from 'next/font/google';
 import './globals.css';
 import { Nav } from '@/components/Nav';
@@ -42,6 +43,9 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     images: ['/lake-home.png'],
   },
+  ...(process.env.GOOGLE_SITE_VERIFICATION
+    ? { verification: { google: process.env.GOOGLE_SITE_VERIFICATION } }
+    : {}),
 };
 
 export default async function RootLayout({
@@ -61,6 +65,7 @@ export default async function RootLayout({
           phone={settings.phone}
         />
       </body>
+      <GoogleAnalytics gaId="G-GLBNKTWFKN" />
     </html>
   );
 }
