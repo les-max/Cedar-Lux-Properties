@@ -2,6 +2,29 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ── Keyframes (raw CSS — Tailwind only emits @keyframes tied to an animation
+   utility, so these live here to match the original inline <style>) ── */
+@keyframes pageFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes heroFadeUp {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes menuSlideIn {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes modalBackdropIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes modalContentIn {
+  from { opacity: 0; transform: scale(0.96); }
+  to { opacity: 1; transform: scale(1); }
+}
+
 /* ── Ported from index.html custom utilities ── */
 body {
   margin: 0;
