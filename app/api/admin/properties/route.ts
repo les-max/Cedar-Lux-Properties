@@ -1,13 +1,17 @@
 import { NextResponse } from 'next/server';
+import { revalidateTag } from 'next/cache';
 import { adminClient, requireAdmin } from '@/lib/admin-server';
 
 // Property writes (insert / upsert / delete). Service-role, password-gated.
+// Each successful write purges the 'properties' cache tag so public pages
+// (home, collection, property pages, sitemap) reflect the change immediately.
 export async function POST(req: Request) {
   const denied = requireAdmin(req);
   if (denied) return denied;
   const body = await req.json();
   const { error } = await adminClient().from('properties').insert(body);
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+  revalidateTag('properties');
   return NextResponse.json({ ok: true });
 }
 
@@ -20,6 +24,7 @@ export async function PUT(req: Request) {
   void created_at;
   const { error } = await adminClient().from('properties').upsert(data, { onConflict: 'id' });
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+  revalidateTag('properties');
   return NextResponse.json({ ok: true });
 }
 
@@ -30,5 +35,6 @@ export async function DELETE(req: Request) {
   if (!id) return NextResponse.json({ error: 'Missing id' }, { status: 400 });
   const { error } = await adminClient().from('properties').delete().eq('id', id);
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+  revalidateTag('properties');
   return NextResponse.json({ ok: true });
 }
