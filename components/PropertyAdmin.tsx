@@ -1,7 +1,9 @@
+'use client';
+
 import React, { useState } from 'react';
-import { Property, PropertyStatus, PropertyType, SiteSettings, LocalSpot } from '../types';
+import { Property, PropertyStatus, PropertyType, SiteSettings, LocalSpot } from '@/types';
 import { Layout, Settings, Edit2, Trash2, X, Sun, LogOut, Plus, Save, CheckCircle, Zap, Star, MapPin, Upload, Loader2 } from 'lucide-react';
-import { supabase } from '../services/supabaseClient';
+import { supabaseBrowser as supabase } from '@/lib/supabase-client';
 
 interface PropertyAdminProps {
   properties: Property[];

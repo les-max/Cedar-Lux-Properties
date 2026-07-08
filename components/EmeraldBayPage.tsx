@@ -1,24 +1,27 @@
 import React from 'react';
+import Link from 'next/link';
+import Image from 'next/image';
 import { ArrowRight, MapPin, Award, Home, Waves } from 'lucide-react';
 
 interface EmeraldBayPageProps {
   phone: string;
-  email: string;
   companyName: string;
   heroImage: string;
-  onContact: () => void;
 }
 
-export const EmeraldBayPage: React.FC<EmeraldBayPageProps> = ({ phone, companyName, heroImage, onContact }) => {
+export const EmeraldBayPage: React.FC<EmeraldBayPageProps> = ({ phone, companyName, heroImage }) => {
   return (
-    <main className="flex-1 pt-24 page-enter">
+    <main className="flex-1 pt-24">
 
       {/* Hero */}
       <section className="relative h-[70vh] min-h-[520px] flex items-end overflow-hidden">
         <div className="absolute inset-0">
-          <img
+          <Image
             src={heroImage}
-            className="w-full h-full object-cover brightness-[0.55]"
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover brightness-[0.55]"
             alt="Emerald Bay at Cedar Creek Lake luxury custom home"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-lake/80 via-lake/20 to-transparent" />
@@ -51,12 +54,12 @@ export const EmeraldBayPage: React.FC<EmeraldBayPageProps> = ({ phone, companyNa
             <p className="text-neutral-600 text-lg leading-relaxed mb-10">
               We specialize in custom spec homes and bespoke builds within Emerald Bay, delivering lakefront properties that are architecturally distinctive, built for longevity, and designed to feel like a permanent escape — not a weekend house.
             </p>
-            <button
-              onClick={onContact}
+            <Link
+              href="/contact"
               className="inline-flex items-center gap-3 px-10 py-4 bg-lake text-white rounded-full font-bold uppercase tracking-[0.15em] text-xs hover:bg-neutral-800 transition-colors"
             >
               Inquire About Emerald Bay <ArrowRight size={16} />
-            </button>
+            </Link>
           </div>
           <div className="grid grid-cols-2 gap-6">
             {[
@@ -155,12 +158,12 @@ export const EmeraldBayPage: React.FC<EmeraldBayPageProps> = ({ phone, companyNa
             Lots are limited. If you have a specific site in mind — or want to know what's currently available at Emerald Bay — reach out directly. We respond the same day.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button
-              onClick={onContact}
+            <Link
+              href="/contact"
               className="px-12 py-5 bg-lake text-white rounded-full font-bold uppercase tracking-[0.15em] text-xs hover:bg-neutral-800 transition-colors"
             >
               Start a Conversation
-            </button>
+            </Link>
             <a
               href={`tel:${phone}`}
               className="px-12 py-5 border-2 border-lake text-lake rounded-full font-bold uppercase tracking-[0.15em] text-xs hover:bg-lake hover:text-white transition-colors"

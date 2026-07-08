@@ -1,11 +1,9 @@
 import React from 'react';
-import { Property } from '../types';
+import Link from 'next/link';
+import Image from 'next/image';
+import { Property } from '@/types';
+import { propertySlug } from '@/lib/slug';
 import { Bed, Bath, Move, LandPlot, Waves } from 'lucide-react';
-
-interface PropertyCardProps {
-  property: Property;
-  onViewDetails?: (property: Property) => void;
-}
 
 const formatter = new Intl.NumberFormat('en-US', {
   style: 'currency',
@@ -20,9 +18,10 @@ const Stat: React.FC<{ icon: React.ReactNode; label: string }> = ({ icon, label 
   </div>
 );
 
-export const PropertyCard: React.FC<PropertyCardProps> = ({ property, onViewDetails }) => {
+export function PropertyCard({ property }: { property: Property }) {
   const type = property.propertyType || 'Home';
   const hasPrice = type !== 'Floor Plan' && property.price > 0;
+  const href = `/properties/${propertySlug(property)}`;
 
   // Per-category stat rows. Floor plans and homes share bed/bath/sqft; lots show land details.
   const stats: React.ReactNode[] = [];
@@ -40,14 +39,19 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({ property, onViewDeta
   }
 
   return (
-    <div className="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl ease-strong-out transition-[transform,box-shadow] duration-300 hover:-translate-y-2">
+    <Link
+      href={href}
+      className="group block bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl ease-strong-out transition-[transform,box-shadow] duration-300 hover:-translate-y-2"
+    >
       <div className="relative h-72 overflow-hidden">
-        <img
+        <Image
           src={property.image}
           alt={property.title}
-          className="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+          fill
+          sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+          className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
         />
-        <div className="absolute top-4 left-4">
+        <div className="absolute top-4 left-4 z-10">
           <span className={`px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider ${
             property.status === 'Available' ? 'bg-green-100 text-green-800' :
             property.status === 'Sold' ? 'bg-red-100 text-red-800' :
@@ -70,13 +74,10 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({ property, onViewDeta
           </div>
         )}
 
-        <button
-          onClick={() => onViewDetails?.(property)}
-          className="w-full py-3 bg-lake text-white rounded-lg font-semibold hover:bg-neutral-800 transition-[background-color,transform] duration-150 ease-out active:scale-[0.97]"
-        >
+        <span className="block w-full text-center py-3 bg-lake text-white rounded-lg font-semibold group-hover:bg-neutral-800 transition-[background-color] duration-150">
           View Details
-        </button>
+        </span>
       </div>
-    </div>
+    </Link>
   );
-};
+}

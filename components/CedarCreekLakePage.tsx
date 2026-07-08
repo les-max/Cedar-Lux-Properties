@@ -1,24 +1,27 @@
 import React from 'react';
+import Link from 'next/link';
+import Image from 'next/image';
 import { ArrowRight, MapPin, Clock, TreePine, Anchor } from 'lucide-react';
 
 interface CedarCreekLakePageProps {
   phone: string;
   companyName: string;
   heroImage: string;
-  onContact: () => void;
-  onEmeraldBay: () => void;
 }
 
-export const CedarCreekLakePage: React.FC<CedarCreekLakePageProps> = ({ phone, companyName, heroImage, onContact, onEmeraldBay }) => {
+export const CedarCreekLakePage: React.FC<CedarCreekLakePageProps> = ({ phone, companyName, heroImage }) => {
   return (
-    <main className="flex-1 pt-24 page-enter">
+    <main className="flex-1 pt-24">
 
       {/* Hero */}
       <section className="relative h-[70vh] min-h-[520px] flex items-end overflow-hidden">
         <div className="absolute inset-0">
-          <img
+          <Image
             src={heroImage}
-            className="w-full h-full object-cover brightness-[0.55]"
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover brightness-[0.55]"
             alt="Cedar Creek Lake Texas luxury custom home builder"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-lake/80 via-lake/20 to-transparent" />
@@ -52,12 +55,12 @@ export const CedarCreekLakePage: React.FC<CedarCreekLakePageProps> = ({ phone, c
               <p className="text-neutral-600 text-lg leading-relaxed mb-10">
                 Unlike Lake Travis or Lake LBJ, Cedar Creek is close enough to feel like a weekend trip and far enough to feel like a world away. For Dallas professionals and families, it's the right distance.
               </p>
-              <button
-                onClick={onContact}
+              <Link
+                href="/contact"
                 className="inline-flex items-center gap-3 px-10 py-4 bg-lake text-white rounded-full font-bold uppercase tracking-[0.15em] text-xs hover:bg-neutral-800 transition-colors"
               >
                 Talk to Us About Building <ArrowRight size={16} />
-              </button>
+              </Link>
             </div>
             <div className="grid grid-cols-2 gap-6">
               {[
@@ -121,9 +124,9 @@ export const CedarCreekLakePage: React.FC<CedarCreekLakePageProps> = ({ phone, c
             <h2 className="text-4xl font-bold serif italic">Cedar Creek Lake Communities</h2>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            <button
-              onClick={onEmeraldBay}
-              className="text-left border border-white/10 rounded-3xl p-10 hover:border-luxury-gold transition-colors group"
+            <Link
+              href="/emerald-bay"
+              className="block text-left border border-white/10 rounded-3xl p-10 hover:border-luxury-gold transition-colors group"
             >
               <div className="flex items-center gap-2 mb-2">
                 <div className="w-2 h-2 rounded-full bg-luxury-gold" />
@@ -136,7 +139,7 @@ export const CedarCreekLakePage: React.FC<CedarCreekLakePageProps> = ({ phone, c
               <span className="inline-flex items-center gap-2 text-luxury-gold text-xs font-bold uppercase tracking-widest group-hover:gap-3 transition-all">
                 Learn More <ArrowRight size={14} />
               </span>
-            </button>
+            </Link>
             <div className="border border-white/10 rounded-3xl p-10">
               <div className="flex items-center gap-2 mb-2">
                 <div className="w-2 h-2 rounded-full bg-white/40" />
@@ -162,12 +165,12 @@ export const CedarCreekLakePage: React.FC<CedarCreekLakePageProps> = ({ phone, c
             Whether you have a lot, a neighborhood in mind, or just a vision — we'll tell you honestly what's possible and what it takes to make it happen on Cedar Creek Lake.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button
-              onClick={onContact}
+            <Link
+              href="/contact"
               className="px-12 py-5 bg-lake text-white rounded-full font-bold uppercase tracking-[0.15em] text-xs hover:bg-neutral-800 transition-colors"
             >
               Start a Conversation
-            </button>
+            </Link>
             <a
               href={`tel:${phone}`}
               className="px-12 py-5 border-2 border-lake text-lake rounded-full font-bold uppercase tracking-[0.15em] text-xs hover:bg-lake hover:text-white transition-colors"

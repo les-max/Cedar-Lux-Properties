@@ -1,0 +1,54 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Ported from index.html custom utilities ── */
+body {
+  margin: 0;
+  padding: 0;
+  background: #fafafa;
+  font-family: var(--font-jakarta), sans-serif;
+}
+h1, h2, h3, h4, .serif {
+  font-family: var(--font-playfair), serif;
+}
+.glass {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+.scrollbar-hide::-webkit-scrollbar { display: none; }
+.scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* ── Easing ── */
+.ease-strong-out { transition-timing-function: cubic-bezier(0.23, 1, 0.32, 1); }
+
+/* ── Page transitions ── */
+.page-enter { animation: pageFadeIn 180ms ease-out forwards; }
+
+/* ── Mobile menu ── */
+.mobile-menu-enter { animation: menuSlideIn 200ms cubic-bezier(0.23, 1, 0.32, 1) forwards; }
+
+/* ── Hero stagger ── */
+.hero-item {
+  opacity: 0;
+  animation: heroFadeUp 650ms cubic-bezier(0.23, 1, 0.32, 1) forwards;
+}
+.hero-item-1 { animation-delay: 0ms; }
+.hero-item-2 { animation-delay: 80ms; }
+.hero-item-3 { animation-delay: 160ms; }
+.hero-item-4 { animation-delay: 260ms; }
+
+/* ── Modal entry ── */
+.animate-modal-backdrop { animation: modalBackdropIn 200ms ease-out forwards; }
+.animate-modal-content { animation: modalContentIn 260ms cubic-bezier(0.23, 1, 0.32, 1) forwards; }
+
+/* ── Reduced motion ── */
+@media (prefers-reduced-motion: reduce) {
+  .page-enter, .mobile-menu-enter, .hero-item,
+  .animate-modal-backdrop, .animate-modal-content {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}
