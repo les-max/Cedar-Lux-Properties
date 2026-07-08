@@ -12,6 +12,14 @@ const nextConfig: NextConfig = {
     // image CDNs in Task 11 before cutover.
     remotePatterns: [{ protocol: 'https', hostname: '**' }],
   },
+  async redirects() {
+    return [
+      // Old SPA route still indexed by Google; send its equity to the homepage.
+      { source: '/home', destination: '/', permanent: true },
+      // Bare /properties has no page; listings live at /collection.
+      { source: '/properties', destination: '/collection', permanent: true },
+    ];
+  },
 };
 
 export default nextConfig;
