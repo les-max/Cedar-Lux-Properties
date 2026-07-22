@@ -55,14 +55,7 @@ export default async function RootLayout({
   const settings = await getSettings();
   return (
     <html lang="en" className={`${jakarta.variable} ${playfair.variable} ${cinzel.variable}`}>
-      <head>
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-GLBNKTWFKN" />
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());gtag('config', 'G-GLBNKTWFKN');`,
-          }}
-        />
-      </head>
+      <head dangerouslySetInnerHTML={{ __html: settings.externalScripts || '' }} />
       <body className="bg-neutral-50 text-neutral-900 overflow-x-hidden">
         <Nav logoImage={settings.logoImage} companyName={settings.companyName} />
         {children}
