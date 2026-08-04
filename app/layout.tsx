@@ -47,6 +47,37 @@ export const metadata: Metadata = {
     : {}),
 };
 
+// Render admin "Header Scripts" as real React elements instead of
+// dangerouslySetInnerHTML on <head>. Browser extensions inject tags into
+// <head> before hydration; with innerHTML replacement React detects the
+// mismatch and rebuilds the head with only the script markup, dropping the
+// stylesheet (pages render completely unstyled). Parsed elements hydrate
+// cleanly while still appearing in the raw server HTML for tag detection.
+function headerScriptElements(html: string): React.ReactNode[] {
+  const nodes: React.ReactNode[] = [];
+  const re = /<script\b([^>]*)>([\s\S]*?)<\/script>/gi;
+  let m: RegExpExecArray | null;
+  let i = 0;
+  while ((m = re.exec(html))) {
+    const attrs = m[1];
+    const body = m[2].trim();
+    const src = attrs.match(/src=["']([^"']+)["']/)?.[1];
+    if (src) {
+      nodes.push(
+        <script
+          key={i++}
+          src={src}
+          async={/\basync\b/.test(attrs) || undefined}
+          defer={/\bdefer\b/.test(attrs) || undefined}
+        />
+      );
+    } else if (body) {
+      nodes.push(<script key={i++} dangerouslySetInnerHTML={{ __html: body }} />);
+    }
+  }
+  return nodes;
+}
+
 export default async function RootLayout({
   children,
 }: {
@@ -55,7 +86,7 @@ export default async function RootLayout({
   const settings = await getSettings();
   return (
     <html lang="en" className={`${jakarta.variable} ${playfair.variable} ${cinzel.variable}`}>
-      <head dangerouslySetInnerHTML={{ __html: settings.externalScripts || '' }} />
+      <head>{headerScriptElements(settings.externalScripts || '')}</head>
       <body className="bg-neutral-50 text-neutral-900 overflow-x-hidden">
         <Nav logoImage={settings.logoImage} companyName={settings.companyName} />
         {children}
