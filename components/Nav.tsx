@@ -8,7 +8,7 @@ import { Menu, X, Instagram, Facebook } from 'lucide-react';
 const LINKS = [
   { href: '/', label: 'Home' },
   { href: '/about', label: 'About' },
-  { href: '/collection', label: 'Collection' },
+  { href: '/collection', label: 'Properties' },
   { href: '/contact', label: 'Contact' },
 ];
 
@@ -53,7 +53,7 @@ export function Nav({ logoImage, companyName }: { logoImage: string; companyName
               onClick={() => setIsMenuOpen(false)}
               className="text-3xl font-bold serif text-left"
             >
-              {l.label === 'About' ? 'About Us' : l.label === 'Collection' ? 'The Collection' : l.label}
+              {l.label === 'About' ? 'About Us' : l.label}
             </Link>
           ))}
           <div className="mt-auto flex gap-6 text-neutral-400">
