@@ -12,7 +12,7 @@ import { propertySlug } from '@/lib/slug';
 export const revalidate = 300;
 
 export const metadata: Metadata = {
-  title: { absolute: 'The Collection | Cedar Creek Lake Homes & Lots | Cedar Lux Properties' },
+  title: { absolute: 'Properties | Cedar Creek Lake Homes & Lots | Cedar Lux Properties' },
   description:
     'Browse available custom homes, lakeside lots, and build-ready floor plans from Cedar Lux Properties on Cedar Creek Lake, Texas.',
   alternates: { canonical: '/collection' },
@@ -41,7 +41,7 @@ export default async function CollectionPage({
       <div className="max-w-7xl mx-auto px-6 md:px-10">
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-8">
           <div>
-            <h1 className="text-6xl font-medium serif italic mb-6">The Collection</h1>
+            <h1 className="text-6xl font-medium serif italic mb-6">Properties</h1>
             <p className="text-neutral-500 max-w-2xl text-lg">
               Browse our currently available residences and upcoming projects on Cedar Creek Lake.
             </p>

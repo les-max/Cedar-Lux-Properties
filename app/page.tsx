@@ -54,7 +54,7 @@ export default async function HomePage() {
             href="/collection"
             className="hero-item hero-item-4 px-12 py-5 bg-luxury-gold text-white font-bold rounded-full hover:bg-white hover:text-lake transition-[background-color,color,transform,box-shadow] duration-150 ease-out active:scale-[0.97] shadow-2xl text-lg inline-flex items-center gap-3"
           >
-            Explore The Collection <ArrowRight size={20} />
+            Explore Our Properties <ArrowRight size={20} />
           </Link>
         </div>
       </section>
