@@ -10,4 +10,9 @@ const url =
 const key =
   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || process.env.VITE_SUPABASE_ANON_KEY || 'placeholder-anon-key';
 
+// False when the NEXT_PUBLIC_* vars are missing from the build, i.e. the client
+// above is pointed at the placeholder host and uploads cannot possibly work.
+// The admin surfaces this instead of failing silently.
+export const supabaseBrowserConfigured = !url.includes('placeholder.supabase.co');
+
 export const supabaseBrowser = createClient(url, key);

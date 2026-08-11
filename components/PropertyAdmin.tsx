@@ -2,8 +2,8 @@
 
 import React, { useState } from 'react';
 import { Property, PropertyStatus, PropertyType, SiteSettings, LocalSpot } from '@/types';
-import { Layout, Settings, Edit2, Trash2, X, Sun, LogOut, Plus, Save, CheckCircle, Zap, Star, MapPin, Upload, Loader2 } from 'lucide-react';
-import { supabaseBrowser as supabase } from '@/lib/supabase-client';
+import { Layout, Settings, Edit2, Trash2, X, Sun, LogOut, Plus, Save, CheckCircle, Zap, Star, MapPin, Upload, Loader2, AlertTriangle } from 'lucide-react';
+import { supabaseBrowser as supabase, supabaseBrowserConfigured } from '@/lib/supabase-client';
 
 interface PropertyAdminProps {
   properties: Property[];
@@ -54,9 +54,13 @@ export const PropertyAdmin: React.FC<PropertyAdminProps> = ({
   const [newGalleryUrl, setNewGalleryUrl] = useState('');
 
   const [uploadingField, setUploadingField] = useState<string | null>(null);
+  const [uploadError, setUploadError] = useState<string | null>(null);
   const [tempSettings, setTempSettings] = useState<SiteSettings>(settings);
 
-  const uploadImage = async (file: File, folder: string): Promise<string | null> => {
+  const uploadImage = async (file: File, folder: string): Promise<string> => {
+    if (!supabaseBrowserConfigured) {
+      throw new Error('Photo storage is not configured for this deployment (missing NEXT_PUBLIC_SUPABASE_URL / NEXT_PUBLIC_SUPABASE_ANON_KEY). Uploads will fail until those are set in Vercel and the site is redeployed.');
+    }
     const ext = file.name.split('.').pop() || 'jpg';
     // 1. Ask the server (which holds the service key) for a signed upload URL.
     const res = await fetch('/api/admin/upload-url', {
@@ -64,19 +68,36 @@ export const PropertyAdmin: React.FC<PropertyAdminProps> = ({
       headers: { 'Content-Type': 'application/json', 'x-admin-password': adminPassword },
       body: JSON.stringify({ folder, ext }),
     });
-    if (!res.ok) { console.error('Failed to get upload URL:', await res.text()); return null; }
+    if (!res.ok) {
+      const detail = await res.text();
+      console.error('Failed to get upload URL:', detail);
+      throw new Error(
+        res.status === 401
+          ? 'Not authorized to upload — log out and sign back in, then try again.'
+          : `Could not start the upload (server said ${res.status}). ${detail.slice(0, 200)}`
+      );
+    }
     const { path, token, publicUrl } = await res.json();
     // 2. Upload the file straight to storage using the one-time signed token.
     const { error } = await supabase.storage.from('images').uploadToSignedUrl(path, token, file);
-    if (error) { console.error('Upload error:', error); return null; }
+    if (error) {
+      console.error('Upload error:', error);
+      throw new Error(`Storage rejected the photo: ${error.message}`);
+    }
     return publicUrl;
   };
 
   const handleUpload = async (file: File, folder: string, fieldKey: string, onUrl: (url: string) => void) => {
+    setUploadError(null);
     setUploadingField(fieldKey);
-    const url = await uploadImage(file, folder);
-    if (url) onUrl(url);
-    setUploadingField(null);
+    try {
+      onUrl(await uploadImage(file, folder));
+    } catch (err) {
+      // Network failures throw rather than returning an error object, so catch both here.
+      setUploadError(err instanceof Error ? err.message : 'Photo upload failed. Please try again.');
+    } finally {
+      setUploadingField(null);
+    }
   };
   const [isAddingSpot, setIsAddingSpot] = useState(false);
   const [editingSpot, setEditingSpot] = useState<LocalSpot | null>(null);
@@ -137,6 +158,20 @@ export const PropertyAdmin: React.FC<PropertyAdminProps> = ({
 
   return (
     <div className="bg-white rounded-3xl shadow-2xl overflow-hidden border border-neutral-100 flex flex-col md:flex-row min-h-[700px] w-full max-w-6xl mx-auto">
+      {/* Upload failure notice — uploads used to fail silently, leaving only a console error */}
+      {uploadError && (
+        <div className="fixed bottom-6 right-6 z-50 max-w-sm bg-red-50 border border-red-200 rounded-xl shadow-xl p-4 flex gap-3 items-start">
+          <AlertTriangle size={18} className="text-red-500 flex-shrink-0 mt-0.5" />
+          <div className="flex-1 space-y-1">
+            <p className="text-xs font-bold uppercase tracking-wider text-red-600">Photo upload failed</p>
+            <p className="text-sm text-red-800 leading-snug">{uploadError}</p>
+          </div>
+          <button type="button" onClick={() => setUploadError(null)} className="text-red-400 hover:text-red-600 flex-shrink-0">
+            <X size={16} />
+          </button>
+        </div>
+      )}
+
       {/* Sidebar */}
       <div className="w-full md:w-64 bg-lake p-8 text-white flex flex-col">
         <h2 className="text-xl font-bold italic serif mb-12">CMS Dashboard</h2>
