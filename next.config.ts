@@ -13,7 +13,29 @@ const nextConfig: NextConfig = {
     remotePatterns: [{ protocol: 'https', hostname: '**' }],
   },
   async redirects() {
+    const wwwHost = [{ type: 'host', value: 'www.cedarluxproperties.com' }] as const;
     return [
+      // www requests reach the app directly (no domain-level redirect in Vercel);
+      // collapse host + legacy-path redirects into a single hop so Google never
+      // sees a redirect chain. Specific legacy paths must precede the catch-all.
+      {
+        source: '/home',
+        has: [...wwwHost],
+        destination: 'https://cedarluxproperties.com/',
+        permanent: true,
+      },
+      {
+        source: '/properties',
+        has: [...wwwHost],
+        destination: 'https://cedarluxproperties.com/collection',
+        permanent: true,
+      },
+      {
+        source: '/:path*',
+        has: [...wwwHost],
+        destination: 'https://cedarluxproperties.com/:path*',
+        permanent: true,
+      },
       // Old SPA route still indexed by Google; send its equity to the homepage.
       { source: '/home', destination: '/', permanent: true },
       // Bare /properties has no page; listings live at /collection.
