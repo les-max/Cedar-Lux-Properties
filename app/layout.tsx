@@ -86,7 +86,13 @@ export default async function RootLayout({
   const settings = await getSettings();
   return (
     <html lang="en" className={`${jakarta.variable} ${playfair.variable} ${cinzel.variable}`}>
-      <head>{headerScriptElements(settings.externalScripts || '')}</head>
+      <head>
+        {/* All media (logo, hero, property photos) is served from Supabase
+            storage; warming the connection early shaves DNS+TLS off the LCP
+            critical path. */}
+        <link rel="preconnect" href="https://lwcpnamisjdenfkbpbpt.supabase.co" />
+        {headerScriptElements(settings.externalScripts || '')}
+      </head>
       <body className="bg-neutral-50 text-neutral-900 overflow-x-hidden">
         <Nav logoImage={settings.logoImage} companyName={settings.companyName} />
         {children}
