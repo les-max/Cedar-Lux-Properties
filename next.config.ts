@@ -25,9 +25,9 @@ const nextConfig: NextConfig = {
         permanent: true,
       },
       {
-        source: '/properties',
+        source: '/collection',
         has: [...wwwHost],
-        destination: 'https://cedarluxproperties.com/collection',
+        destination: 'https://cedarluxproperties.com/properties',
         permanent: true,
       },
       {
