@@ -85,7 +85,7 @@ export default async function PropertyPage({
 
       <div className="max-w-4xl mx-auto px-6 py-16">
         <nav className="text-xs font-bold uppercase tracking-widest text-neutral-400 mb-6">
-          <Link href="/collection" className="hover:text-lake transition-colors">
+          <Link href="/properties" className="hover:text-lake transition-colors">
             Properties
           </Link>
           <span className="mx-2">/</span>

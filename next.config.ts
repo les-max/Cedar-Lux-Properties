@@ -16,8 +16,8 @@ const nextConfig: NextConfig = {
     return [
       // Old SPA route still indexed by Google; send its equity to the homepage.
       { source: '/home', destination: '/', permanent: true },
-      // Bare /properties has no page; listings live at /collection.
-      { source: '/properties', destination: '/collection', permanent: true },
+      // Collection → Properties rename (2026-09-08): send old URL's equity to the new one.
+      { source: '/collection', destination: '/properties', permanent: true },
     ];
   },
 };

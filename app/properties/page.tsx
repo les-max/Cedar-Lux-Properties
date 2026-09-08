@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Star, Search, ExternalLink } from 'lucide-react';
+import { Star, Search, ExternalLink, ArrowRight } from 'lucide-react';
 import { getProperties } from '@/lib/site-data';
 import { PropertyCard } from '@/components/PropertyCard';
 import { StatusFilter } from '@/components/StatusFilter';
@@ -12,20 +12,20 @@ import { propertySlug } from '@/lib/slug';
 export const revalidate = 300;
 
 export const metadata: Metadata = {
-  title: { absolute: 'Properties | Cedar Creek Lake Homes & Lots | Cedar Lux Properties' },
+  title: { absolute: 'Cedar Creek Lake Properties | Homes & Lakefront Lots | Cedar Lux Properties' },
   description:
-    'Browse available custom homes, lakeside lots, and build-ready floor plans from Cedar Lux Properties on Cedar Creek Lake, Texas.',
-  alternates: { canonical: '/collection' },
+    'Browse available custom homes and lakefront lots on Cedar Creek Lake, Texas, from Cedar Lux Properties.',
+  alternates: { canonical: '/properties' },
 };
 
 const STATUSES = ['All', 'Available', 'Under Construction', 'Sold'];
 const SECTIONS = [
-  { type: 'Home', eyebrow: 'Available Homes', heading: 'Homes You Can Buy Today' },
-  { type: 'Lot', eyebrow: 'Available Lots', heading: 'Lakeside Lots & Land' },
-  { type: 'Floor Plan', eyebrow: 'Available Floor Plans', heading: 'Plans to Build Your Dream' },
+  { type: 'Home', eyebrow: 'Available Homes', heading: 'Homes You Can Buy Today', link: { href: '/homes-for-sale', label: 'Browse Homes for Sale' } },
+  { type: 'Lot', eyebrow: 'Available Lots', heading: 'Lakeside Lots & Land', link: null },
+  { type: 'Floor Plan', eyebrow: 'Available Floor Plans', heading: 'Plans to Build Your Dream', link: null },
 ];
 
-export default async function CollectionPage({
+export default async function PropertiesPage({
   searchParams,
 }: {
   searchParams: Promise<{ status?: string }>;
@@ -97,9 +97,19 @@ export default async function CollectionPage({
             if (group.length === 0) return null;
             return (
               <div key={section.type} className="mb-20 last:mb-0">
-                <div className="mb-10">
-                  <p className="text-[10px] font-black uppercase tracking-[0.3em] text-luxury-gold mb-2">{section.eyebrow}</p>
-                  <h2 className="text-3xl font-bold serif italic text-lake">{section.heading}</h2>
+                <div className="mb-10 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
+                  <div>
+                    <p className="text-[10px] font-black uppercase tracking-[0.3em] text-luxury-gold mb-2">{section.eyebrow}</p>
+                    <h2 className="text-3xl font-bold serif italic text-lake">{section.heading}</h2>
+                  </div>
+                  {section.link && (
+                    <Link
+                      href={section.link.href}
+                      className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-lake hover:text-luxury-gold transition-colors"
+                    >
+                      {section.link.label} <ArrowRight size={14} />
+                    </Link>
+                  )}
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
                   {group.map((property) => (

@@ -3,7 +3,7 @@ import Link from 'next/link';
 const FOOTER_LINKS = [
   { href: '/', label: 'Home' },
   { href: '/about', label: 'About' },
-  { href: '/collection', label: 'Properties' },
+  { href: '/properties', label: 'Properties' },
   { href: '/contact', label: 'Contact' },
   { href: '/emerald-bay', label: 'Emerald Bay' },
   { href: '/cedar-creek-lake', label: 'Cedar Creek Lake' },

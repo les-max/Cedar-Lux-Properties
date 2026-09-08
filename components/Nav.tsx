@@ -8,7 +8,7 @@ import { Menu, X, Instagram, Facebook } from 'lucide-react';
 const LINKS = [
   { href: '/', label: 'Home' },
   { href: '/about', label: 'About' },
-  { href: '/collection', label: 'Properties' },
+  { href: '/properties', label: 'Properties' },
   { href: '/contact', label: 'Contact' },
 ];
 
