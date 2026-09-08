@@ -32,7 +32,7 @@ export const EmeraldBayPage: React.FC<EmeraldBayPageProps> = ({ phone, companyNa
             <span className="text-[10px] font-bold uppercase tracking-[0.3em]">Cedar Creek Lake, Texas</span>
           </div>
           <h1 className="text-5xl md:text-7xl font-bold serif italic leading-tight max-w-3xl mb-6">
-            Emerald Bay Custom Homes
+            Why We Build at Emerald Bay
           </h1>
           <p className="text-xl text-neutral-200 max-w-2xl font-light">
             Cedar Creek Lake's most prestigious waterfront community — where Cedar Lux Properties builds its most iconic custom residences.
