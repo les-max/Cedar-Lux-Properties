@@ -21,7 +21,14 @@ export function Nav({ logoImage, companyName }: { logoImage: string; companyName
       <div className="max-w-7xl mx-auto px-6 md:px-10 h-24 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-4">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={logoImage} alt={companyName} className="h-20 w-auto object-contain" />
+          {/* The nav logo is the page's LCP element (the full-viewport hero is
+              excluded by Chrome's heuristic), so it must load at top priority. */}
+          <img
+            src={logoImage}
+            alt={companyName}
+            fetchPriority="high"
+            className="h-20 w-auto object-contain"
+          />
         </Link>
 
         <div className="hidden md:flex items-center gap-10">
