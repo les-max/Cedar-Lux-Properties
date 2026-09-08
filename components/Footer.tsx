@@ -4,6 +4,7 @@ const FOOTER_LINKS = [
   { href: '/', label: 'Home' },
   { href: '/about', label: 'About' },
   { href: '/properties', label: 'Properties' },
+  { href: '/homes-for-sale', label: 'Homes for Sale' },
   { href: '/contact', label: 'Contact' },
   { href: '/emerald-bay', label: 'Emerald Bay' },
   { href: '/cedar-creek-lake', label: 'Cedar Creek Lake' },
