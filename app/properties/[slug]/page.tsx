@@ -25,9 +25,8 @@ export async function generateMetadata({
   const p = findBySlug(properties, slug);
   if (!p) return {};
   const description = (p.description || '').replace(/\s+/g, ' ').trim().slice(0, 155);
-  const place = p.neighborhood || 'Cedar Creek Lake';
   return {
-    title: { absolute: `${p.title} | ${place} | Cedar Lux Properties` },
+    title: { absolute: `${p.title} | Cedar Creek Lake | Cedar Lux Properties` },
     description,
     alternates: { canonical: `/properties/${slug}` },
     openGraph: {
@@ -89,7 +88,7 @@ export default async function PropertyPage({
             Properties
           </Link>
           <span className="mx-2">/</span>
-          <span className="text-luxury-gold">{property.neighborhood || 'Cedar Creek Lake'}</span>
+          <span className="text-luxury-gold">Cedar Creek Lake</span>
         </nav>
 
         <h1 className="text-4xl md:text-5xl font-bold serif italic text-lake mb-3">{property.title}</h1>

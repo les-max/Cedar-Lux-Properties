@@ -30,7 +30,7 @@ export const DEFAULT_SETTINGS: SiteSettings = {
       "id": "2",
       "icon": "Flag",
       "title": "Championship Golf",
-      "description": "The Pinnacle Club and Long Cove offer world-class fairways and greens with breathtaking lake views.",
+      "description": "The Pinnacle Club offers world-class fairways and greens with breathtaking lake views.",
       "highlights": [
         "Pro-Shop Access",
         "Member Tournaments",
@@ -123,13 +123,6 @@ export const DEFAULT_SETTINGS: SiteSettings = {
       "isFeatured": false
     }
   ],
-  "neighborhoods": [
-    "Long Cove",
-    "Enchanted Isle",
-    "Pinnacle Club",
-    "Star Harbor",
-    "Beacon Hill"
-  ],
   "phone": "972-764-8687",
   "email": "info@cedarluxproperties.com",
   "address": "Mabank, TX 75147",
@@ -158,7 +151,6 @@ export const INITIAL_PROPERTIES: Property[] = [
     "gallery": [],
     "status": "Available",
     "propertyType": "Home",
-    "neighborhood": "Long Cove",
     "features": [],
     "address": "217 Autumn Wood Trail, Mabank, TX 75147",
     "isFeatured": false,

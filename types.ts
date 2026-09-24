@@ -15,7 +15,6 @@ export interface Property {
   gallery: string[];
   status: PropertyStatus;
   propertyType: PropertyType;
-  neighborhood: string;
   features: string[];
   address?: string;
   acres?: number;
@@ -64,7 +63,6 @@ export interface SiteSettings {
   activities: Activity[];
   localSpots: LocalSpot[];
   // Metadata & Contact
-  neighborhoods: string[];
   phone: string;
   email: string;
   address: string;

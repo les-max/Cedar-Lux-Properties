@@ -43,7 +43,6 @@ export const PropertyAdmin: React.FC<PropertyAdminProps> = ({
     gallery: [],
     status: 'Available',
     propertyType: 'Home',
-    neighborhood: settings.neighborhoods[0] || 'Cedar Creek Lake',
     features: [],
     address: '',
     acres: undefined,
