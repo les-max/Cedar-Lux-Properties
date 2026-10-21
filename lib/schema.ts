@@ -49,6 +49,19 @@ export function webPageSchema(name: string, path: string, description: string, c
   };
 }
 
+/** FAQPage schema; questions and answers must match the visible FAQ exactly. */
+export function faqSchema(faqs: { question: string; answer: string }[]) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map(({ question, answer }) => ({
+      '@type': 'Question',
+      name: question,
+      acceptedAnswer: { '@type': 'Answer', text: answer },
+    })),
+  };
+}
+
 /** Product/listing schema for an individual property. */
 export function propertySchema(p: Property) {
   const availability =

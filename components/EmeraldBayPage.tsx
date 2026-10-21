@@ -52,7 +52,7 @@ export const EmeraldBayPage: React.FC<EmeraldBayPageProps> = ({ phone, companyNa
               Emerald Bay sits at the most coveted stretch of Cedar Creek Lake — deep-water access, protected coves, and a community that holds its value unlike anywhere else in the region. For {companyName}, it's where our signature builds come to life.
             </p>
             <p className="text-neutral-600 text-lg leading-relaxed mb-10">
-              We specialize in custom spec homes and bespoke builds within Emerald Bay, delivering lakefront properties that are architecturally distinctive, built for longevity, and designed to feel like a permanent escape — not a weekend house.
+              We specialize in custom spec homes and bespoke builds within Emerald Bay, delivering lakefront properties that are architecturally distinctive, built for longevity, and designed to feel like a permanent escape — not a weekend house. Beyond Emerald Bay, we are a <Link href="/cedar-creek-lake" className="text-lake font-bold underline underline-offset-2 hover:text-luxury-gold transition-colors">Cedar Creek Lake custom home builder</Link> working across the lake wherever the right lot meets the right client.
             </p>
             <Link
               href="/contact"
@@ -145,6 +145,17 @@ export const EmeraldBayPage: React.FC<EmeraldBayPageProps> = ({ phone, companyNa
               </div>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* Available Now */}
+      <section className="py-28 bg-neutral-50">
+        <div className="max-w-3xl mx-auto px-6 md:px-10 text-center">
+          <p className="text-[10px] font-black uppercase tracking-[0.3em] text-luxury-gold mb-4">For Sale</p>
+          <h2 className="text-4xl md:text-5xl font-bold serif italic mb-6">Available Now at Emerald Bay</h2>
+          <p className="text-neutral-500 text-lg leading-relaxed">
+            <Link href="/properties/4529-sapphire-way-mlv8" className="text-lake font-bold underline underline-offset-2 hover:text-luxury-gold transition-colors">4529 Sapphire Way</Link> is Emerald Bay's first spec home, and it is for sale now at $1,695,000. 4 bedrooms, 5 baths, 3,318 sq ft, with a protected water view from an 834 sq ft second floor terrace and one boat slip included.
+          </p>
         </div>
       </section>
 

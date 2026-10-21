@@ -1,8 +1,8 @@
 import type { Metadata } from 'next';
 import { getSettings } from '@/lib/site-data';
-import { CedarCreekLakePage } from '@/components/CedarCreekLakePage';
+import { CedarCreekLakePage, CEDAR_CREEK_LAKE_FAQS } from '@/components/CedarCreekLakePage';
 import { JsonLd } from '@/components/JsonLd';
-import { businessSchema, webPageSchema } from '@/lib/schema';
+import { businessSchema, faqSchema, webPageSchema } from '@/lib/schema';
 
 export const revalidate = 300;
 
@@ -23,6 +23,7 @@ export default async function CedarCreekLakeRoute() {
         data={[
           businessSchema(settings),
           webPageSchema('Cedar Creek Lake Custom Home Builder', '/cedar-creek-lake', DESCRIPTION, 'Cedar Creek Lake Custom Homes'),
+          faqSchema(CEDAR_CREEK_LAKE_FAQS),
         ]}
       />
       <CedarCreekLakePage

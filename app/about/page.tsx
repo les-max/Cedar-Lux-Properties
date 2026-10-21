@@ -34,7 +34,7 @@ export default function AboutPage() {
         <div className="mb-16 text-center">
           <h2 className="text-4xl font-bold serif italic mb-6 text-lake">About Cedar Lux Properties</h2>
           <p className="text-xl text-neutral-500 leading-relaxed">
-            Gary Payne founded Cedar Lux Properties in 2015, but he&apos;s been building on Cedar Creek Lake since 2011. In that time he&apos;s built everything from $250,000 homes to multi-million dollar custom builds — and every one of those projects shaped how Cedar Lux approaches the work today.
+            Gary Payne founded Cedar Lux Properties in 2015, but he&apos;s been building on Cedar Creek Lake since 2011. In that time he&apos;s built everything from $250,000 homes to multi-million dollar custom builds — and every one of those projects shaped how Cedar Lux approaches the work today. See how we approach <Link href="/cedar-creek-lake" className="text-lake font-bold underline underline-offset-2 hover:text-luxury-gold transition-colors">custom homes on Cedar Creek Lake</Link>.
           </p>
         </div>
 

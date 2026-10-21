@@ -10,6 +10,12 @@ import { propertySchema } from '@/lib/schema';
 
 export const revalidate = 300;
 
+// Hand-written meta descriptions, keyed by property slug.
+const DESCRIPTION_OVERRIDES: Record<string, string> = {
+  '4529-sapphire-way-mlv8':
+    '4529 Sapphire Way in Emerald Bay: 4 bed, 5 bath, 3,318 sq ft modern lake home for sale at $1,695,000, built by Cedar Lux Properties on Cedar Creek Lake.',
+};
+
 export async function generateStaticParams() {
   const properties = await getProperties();
   return properties.map((p) => ({ slug: propertySlug(p) }));
@@ -24,7 +30,8 @@ export async function generateMetadata({
   const properties = await getProperties();
   const p = findBySlug(properties, slug);
   if (!p) return {};
-  const description = (p.description || '').replace(/\s+/g, ' ').trim().slice(0, 155);
+  const description =
+    DESCRIPTION_OVERRIDES[slug] ?? (p.description || '').replace(/\s+/g, ' ').trim().slice(0, 155);
   return {
     title: { absolute: `${p.title} | Cedar Creek Lake | Cedar Lux Properties` },
     description,
