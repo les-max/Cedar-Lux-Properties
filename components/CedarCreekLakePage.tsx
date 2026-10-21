@@ -20,7 +20,7 @@ const PROCESS_STEPS = [
     icon: <Ruler size={22} />,
     step: '02',
     title: 'Architecture & Planning',
-    body: 'A site-specific plan, not a catalog floor plan turned sideways. We coordinate architecture, engineering, and permitting for the lake environment, so the design that gets approved is the design that actually gets built.',
+    body: 'Start from one of our existing floor plans, adapted to your lot, or from a fully site specific plan designed from scratch. We coordinate architecture, engineering, and permitting for the lake environment, so the design that gets approved is the design that actually gets built.',
   },
   {
     icon: <Hammer size={22} />,
@@ -64,7 +64,7 @@ export const CEDAR_CREEK_LAKE_FAQS = [
   {
     question: 'Can I look at your floor plans?',
     answer:
-      'We do not sell or build from stock floor plans. Each home is designed for its specific lot, so the floor plan is created during the architecture and planning stage. The Sapphire Way page shows a current example in detail.',
+      'Yes. Cedar Lux has floor plans you can start from, and we will walk you through them in a consultation. Using one is optional: a plan can be adapted to your lot, your layout, and your finishes, or we can design a home from scratch instead. Built examples are on our properties and homes for sale pages.',
   },
   {
     question: 'Do you have homes for sale, or do you only build to order?',
@@ -84,7 +84,7 @@ export const CEDAR_CREEK_LAKE_FAQS = [
   {
     question: 'How far is Cedar Creek Lake from Dallas?',
     answer:
-      'About 60 minutes. Highway 175 puts you at the lake in under an hour from the 635 corridor, on a 37,000 acre lake, the largest inland lake in Texas.',
+      'About 60 minutes. Highway 175 puts you at the lake in under an hour from the 635 corridor, on a lake that covers 32,623 acres.',
   },
 ];
 
@@ -116,7 +116,7 @@ export const CedarCreekLakePage: React.FC<CedarCreekLakePageProps> = ({ phone, c
             Cedar Creek Lake Custom Home Builder
           </h1>
           <p className="text-xl text-neutral-200 max-w-2xl font-light">
-            {companyName} designs and builds custom homes on Cedar Creek Lake — from modern lake houses to luxury waterfront residences, sited to their lot rather than dropped from a plan book.
+            {companyName} designs and builds custom homes on Cedar Creek Lake — from modern lake houses to luxury waterfront residences, each one sited to its lot, whether it starts from an existing Cedar Lux plan or from a blank page.
           </p>
         </div>
       </section>
@@ -128,10 +128,10 @@ export const CedarCreekLakePage: React.FC<CedarCreekLakePageProps> = ({ phone, c
             <div>
               <p className="text-[10px] font-black uppercase tracking-[0.3em] text-luxury-gold mb-4">The Lake</p>
               <h2 className="text-4xl md:text-5xl font-bold serif italic mb-8 leading-tight">
-                Building at Texas' Largest Inland Lake
+                Big Water, Close to Dallas
               </h2>
               <p className="text-neutral-600 text-lg leading-relaxed mb-6">
-                Cedar Creek Lake spans over 37,000 acres — the largest inland lake in Texas — just 60 miles southeast of Dallas. Deep water, protected coves, and a growing base of luxury development have made it a serious destination for custom home construction, not just a weekend lake.
+                Cedar Creek Lake spans 32,623 acres, just 60 miles southeast of Dallas. Deep water, protected coves, and a growing base of luxury development have made it a serious destination for custom home construction, not just a weekend lake.
               </p>
               <p className="text-neutral-600 text-lg leading-relaxed mb-6">
                 That proximity matters for a build: closer means more site visits, faster decisions, and a builder who can actually be on the lot when it counts — not a once-a-month drive from three hours away.
@@ -149,7 +149,7 @@ export const CedarCreekLakePage: React.FC<CedarCreekLakePageProps> = ({ phone, c
             <div className="grid grid-cols-2 gap-6">
               {[
                 { icon: <Clock size={24} />, label: '60 Min from Dallas', desc: 'Highway 175 puts you at the lake in under an hour from the 635 corridor.' },
-                { icon: <Anchor size={24} />, label: '37,000 Acres', desc: 'Largest inland lake in Texas — plenty of open water and protected coves.' },
+                { icon: <Anchor size={24} />, label: '32,623 Acres', desc: 'Plenty of open water and protected coves.' },
                 { icon: <TreePine size={24} />, label: 'East Texas Setting', desc: 'Piney woods, rolling hills, and clear water you won\'t find in Central Texas.' },
                 { icon: <MapPin size={24} />, label: 'Established Communities', desc: 'Half a dozen-plus gated and lakefront communities ring the shoreline, Emerald Bay among them.' },
               ].map(({ icon, label, desc }) => (
@@ -271,15 +271,18 @@ export const CedarCreekLakePage: React.FC<CedarCreekLakePageProps> = ({ phone, c
       <section className="py-28 bg-white">
         <div className="max-w-3xl mx-auto px-6 md:px-10">
           <p className="text-[10px] font-black uppercase tracking-[0.3em] text-luxury-gold mb-4">Floor Plans</p>
-          <h2 className="text-4xl md:text-5xl font-bold serif italic mb-8">Floor Plans, Designed for the Lot</h2>
+          <h2 className="text-4xl md:text-5xl font-bold serif italic mb-8">Floor Plans: Start From a Plan, or Start From Scratch</h2>
           <p className="text-neutral-500 text-lg leading-relaxed mb-6">
-            People often search for our floor plans, so here is the honest answer. Cedar Lux does not build from a plan book. Every floor plan starts with the lot: cove position, elevation, tree line, and sun path. The architecture and planning stage then produces a site specific plan, not a catalog plan turned sideways.
+            You do not have to start with a blank page. Cedar Lux has floor plans you can use as a starting point. Choose a plan that fits how you want to live, and we adapt it to your lot: cove position, elevation, tree line, and sun path. Room layouts, sizes, and finishes can be adjusted from there.
           </p>
           <p className="text-neutral-500 text-lg leading-relaxed mb-6">
-            As an example, <Link href={SAPPHIRE_WAY_HREF} className={textLink}>4529 Sapphire Way</Link> uses an open main level with the primary suite on the main floor, a flex space that works as a fifth bedroom, a dual staircase with floor to ceiling windows, and a second level loft and terrace oriented to the water. A home on a different lot would be planned differently, because the lot is different.
+            Starting from a plan is optional, not required. If you would rather design from scratch, the architecture and planning stage produces a fully site specific plan instead. Either way, the plan that gets approved is the plan that gets built.
+          </p>
+          <p className="text-neutral-500 text-lg leading-relaxed mb-6">
+            The homes on this site show what a starting point can become. <Link href={SAPPHIRE_WAY_HREF} className={textLink}>4529 Sapphire Way</Link> uses an open main level with the primary suite on the main floor, a flex space that works as a fifth bedroom, a dual staircase with floor to ceiling windows, and a second level loft and terrace oriented to the water.
           </p>
           <p className="text-neutral-500 text-lg leading-relaxed">
-            If you have a lot, or a community in mind, the first step is a site and design consultation where we walk the lot and talk through what the home should be.
+            Talk to us about building and we will walk you through the plans that fit your lot and your budget.
           </p>
         </div>
       </section>
