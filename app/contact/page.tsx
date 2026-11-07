@@ -30,7 +30,7 @@ export default async function ContactPage() {
                 </div>
                 <div>
                   <p className="text-[10px] font-black uppercase tracking-widest text-neutral-400">Direct Line</p>
-                  <p className="text-xl font-bold text-lake">{settings.phone}</p>
+                  <p className="text-xl font-bold text-lake"><a href={`tel:${settings.phone}`}>{settings.phone}</a></p>
                 </div>
               </div>
               <div className="flex items-center gap-6">
@@ -39,7 +39,7 @@ export default async function ContactPage() {
                 </div>
                 <div>
                   <p className="text-[10px] font-black uppercase tracking-widest text-neutral-400">Inquiries</p>
-                  <p className="text-xl font-bold text-lake">{settings.email}</p>
+                  <p className="text-xl font-bold text-lake"><a href={`mailto:${settings.email}`}>{settings.email}</a></p>
                 </div>
               </div>
               <div className="flex items-center gap-6">

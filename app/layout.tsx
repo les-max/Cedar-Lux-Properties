@@ -3,6 +3,7 @@ import { Plus_Jakarta_Sans, Playfair_Display, Cinzel } from 'next/font/google';
 import './globals.css';
 import { Nav } from '@/components/Nav';
 import { Footer } from '@/components/Footer';
+import { ClickTracking } from '@/components/ClickTracking';
 import { getSettings } from '@/lib/site-data';
 
 const jakarta = Plus_Jakarta_Sans({
@@ -94,12 +95,14 @@ export default async function RootLayout({
         {headerScriptElements(settings.externalScripts || '')}
       </head>
       <body className="bg-neutral-50 text-neutral-900 overflow-x-hidden">
+        <ClickTracking />
         <Nav logoImage={settings.logoImage} companyName={settings.companyName} />
         {children}
         <Footer
           logoImage={settings.logoImage}
           companyName={settings.companyName}
           phone={settings.phone}
+          email={settings.email}
         />
       </body>
     </html>

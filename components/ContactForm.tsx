@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import { Send, CheckCircle, AlertCircle } from 'lucide-react';
+import { trackEvent } from '@/lib/analytics';
 
 interface ContactFormProps {
   webhookUrl: string;
@@ -79,6 +80,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({ webhookUrl, companyNam
 
       setStatus('success');
       setFormData({ name: '', email: '', phone: '', message: '', consent: false });
+      trackEvent('generate_lead', { method: 'contact_form', page_path: '/contact' });
     } catch (err) {
       setStatus('error');
       setErrorMessage('Something went wrong. Please try again or call us directly.');
