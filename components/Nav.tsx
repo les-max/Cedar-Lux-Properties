@@ -17,42 +17,47 @@ export function Nav({ logoImage, companyName }: { logoImage: string; companyName
   const pathname = usePathname();
 
   return (
-    <nav className="fixed w-full z-50 glass shadow-sm">
-      <div className="max-w-7xl mx-auto px-6 md:px-10 h-24 flex items-center justify-between">
-        <Link href="/" className="flex items-center gap-4">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          {/* The nav logo is the page's LCP element (the full-viewport hero is
-              excluded by Chrome's heuristic), so it must load at top priority. */}
-          <img
-            src={logoImage}
-            alt={companyName}
-            fetchPriority="high"
-            className="h-20 w-auto object-contain"
-          />
-        </Link>
+    <>
+      <nav className="fixed w-full z-50 glass shadow-sm">
+        <div className="max-w-7xl mx-auto px-6 md:px-10 h-24 flex items-center justify-between">
+          <Link href="/" className="flex items-center gap-4">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            {/* The nav logo is the page's LCP element (the full-viewport hero is
+                excluded by Chrome's heuristic), so it must load at top priority. */}
+            <img
+              src={logoImage}
+              alt={companyName}
+              fetchPriority="high"
+              className="h-20 w-auto object-contain"
+            />
+          </Link>
 
-        <div className="hidden md:flex items-center gap-10">
-          {LINKS.map((l) => {
-            const active = pathname === l.href;
-            return (
-              <Link
-                key={l.href}
-                href={l.href}
-                className={`text-xs font-bold tracking-[0.2em] uppercase transition-colors ${active ? 'text-luxury-gold' : 'text-neutral-600 hover:text-lake'}`}
-              >
-                {l.label}
-              </Link>
-            );
-          })}
+          <div className="hidden md:flex items-center gap-10">
+            {LINKS.map((l) => {
+              const active = pathname === l.href;
+              return (
+                <Link
+                  key={l.href}
+                  href={l.href}
+                  className={`text-xs font-bold tracking-[0.2em] uppercase transition-colors ${active ? 'text-luxury-gold' : 'text-neutral-600 hover:text-lake'}`}
+                >
+                  {l.label}
+                </Link>
+              );
+            })}
+          </div>
+
+          <button className="md:hidden text-lake" onClick={() => setIsMenuOpen(!isMenuOpen)} aria-label="Menu">
+            {isMenuOpen ? <X size={32} /> : <Menu size={32} />}
+          </button>
         </div>
+      </nav>
 
-        <button className="md:hidden text-lake" onClick={() => setIsMenuOpen(!isMenuOpen)} aria-label="Menu">
-          {isMenuOpen ? <X size={32} /> : <Menu size={32} />}
-        </button>
-      </div>
-
+      {/* Sibling of <nav>, not a child: the header's backdrop-filter makes it the
+          containing block for fixed descendants, which would shrink this panel
+          to the header's height and leave the links with no background. */}
       {isMenuOpen && (
-        <div className="fixed inset-0 z-[60] bg-white flex flex-col p-12 pt-32 gap-8 md:hidden mobile-menu-enter">
+        <div className="fixed inset-x-0 top-24 bottom-0 z-40 bg-white flex flex-col p-12 pt-8 gap-8 overflow-y-auto md:hidden mobile-menu-enter">
           {LINKS.map((l) => (
             <Link
               key={l.href}
@@ -68,6 +73,6 @@ export function Nav({ logoImage, companyName }: { logoImage: string; companyName
           </div>
         </div>
       )}
-    </nav>
+    </>
   );
 }
