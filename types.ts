@@ -71,7 +71,6 @@ export interface SiteSettings {
   // Integrations
   externalScripts: string;
   webhookUrl: string;
-  highlevelToken: string;
   highlevelLocationId: string;
   highlevelMessageFieldKey: string;
   highlevelPipelineId: string;

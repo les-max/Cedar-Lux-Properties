@@ -129,7 +129,6 @@ export const DEFAULT_SETTINGS: SiteSettings = {
   "socialImage": "https://photos.zillowstatic.com/fp/478eb995b712eb79af80c59ea8f527ba-uncropped_scaled_within_1536_1152.webp",
   "externalScripts": "",
   "webhookUrl": "",
-  "highlevelToken": "",
   "highlevelLocationId": "",
   "highlevelMessageFieldKey": "",
   "highlevelPipelineId": "",

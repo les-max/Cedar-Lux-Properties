@@ -7,15 +7,10 @@ interface ContactFormProps {
   webhookUrl: string;
   companyName: string;
   prefillMessage?: string;
-  highlevelToken?: string;
-  highlevelLocationId?: string;
-  highlevelMessageFieldKey?: string;
-  highlevelPipelineId?: string;
-  highlevelPipelineStageId?: string;
-  notificationEmail?: string;
+  highlevelEnabled?: boolean;
 }
 
-export const ContactForm: React.FC<ContactFormProps> = ({ webhookUrl, companyName, prefillMessage, highlevelToken, highlevelLocationId, highlevelMessageFieldKey, highlevelPipelineId, highlevelPipelineStageId, notificationEmail }) => {
+export const ContactForm: React.FC<ContactFormProps> = ({ webhookUrl, companyName, prefillMessage, highlevelEnabled }) => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -37,8 +32,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({ webhookUrl, companyNam
       return;
     }
 
-    const useHighLevel = highlevelToken && highlevelLocationId;
-    if (!useHighLevel && !webhookUrl) {
+    if (!highlevelEnabled && !webhookUrl) {
       setStatus('error');
       setErrorMessage('Form submission is currently unavailable. Please contact us via phone.');
       return;
@@ -46,19 +40,13 @@ export const ContactForm: React.FC<ContactFormProps> = ({ webhookUrl, companyNam
 
     setStatus('submitting');
     try {
-      if (useHighLevel) {
+      if (highlevelEnabled) {
         const contactRes = await fetch('/api/submit-contact', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             ...formData,
-            companyName,
             consentText,
-            highlevelToken,
-            highlevelLocationId,
-            highlevelPipelineId,
-            highlevelPipelineStageId,
-            notificationEmail,
           }),
         });
 

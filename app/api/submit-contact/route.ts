@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { getSettings } from '@/lib/site-data';
 
 const HL_BASE = 'https://services.leadconnectorhq.com';
 const HL_VERSION = '2021-07-28';
@@ -6,14 +7,15 @@ const HL_VERSION = '2021-07-28';
 // Creates/updates a HighLevel (GHL) contact from the website contact form,
 // attaches the message + TCPA consent as notes, and opens a pipeline opportunity.
 export async function POST(req: Request) {
-  const {
-    name, email, phone, message, companyName, consent, consentText,
-    highlevelToken, highlevelLocationId,
-    highlevelPipelineId, highlevelPipelineStageId,
-  } = await req.json();
+  const { name, email, phone, message, consent, consentText } = await req.json();
+
+  // Credentials and routing come from the server only, never the request body.
+  const highlevelToken = process.env.HIGHLEVEL_TOKEN;
+  const { companyName, highlevelLocationId, highlevelPipelineId, highlevelPipelineStageId } =
+    await getSettings();
 
   if (!highlevelToken || !highlevelLocationId) {
-    return NextResponse.json({ error: 'Missing HighLevel credentials' }, { status: 400 });
+    return NextResponse.json({ error: 'HighLevel is not configured' }, { status: 500 });
   }
 
   const headers = {

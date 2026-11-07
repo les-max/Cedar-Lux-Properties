@@ -638,17 +638,6 @@ export const PropertyAdmin: React.FC<PropertyAdminProps> = ({
                         </div>
                         <div className="space-y-4">
                             <div className="space-y-2">
-                                <label className="text-xs font-bold uppercase text-neutral-400">HighLevel Private Integration Token</label>
-                                <input
-                                    type="password"
-                                    className="w-full p-3 border rounded-xl font-mono text-sm"
-                                    value={tempSettings.highlevelToken || ''}
-                                    onChange={e => setTempSettings({...tempSettings, highlevelToken: e.target.value})}
-                                    placeholder="eyJhbGci..."
-                                />
-                                <p className="text-[10px] text-neutral-400">When set, form submissions will create contacts directly in HighLevel via the API.</p>
-                            </div>
-                            <div className="space-y-2">
                                 <label className="text-xs font-bold uppercase text-neutral-400">HighLevel Location ID</label>
                                 <input
                                     className="w-full p-3 border rounded-xl font-mono text-sm"

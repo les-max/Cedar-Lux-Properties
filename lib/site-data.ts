@@ -40,7 +40,14 @@ export const getSettings = unstable_cache(
         .eq('id', 1)
         .maybeSingle();
       if (error) throw error;
-      if (data?.data) return { ...DEFAULT_SETTINGS, ...(data.data as Partial<SiteSettings>) };
+      if (data?.data) {
+        // The CRM token lives in the HIGHLEVEL_TOKEN env var. Drop any copy still
+        // stored in this row so it can never reach a page or the browser.
+        const { highlevelToken: _token, ...safe } = data.data as Partial<SiteSettings> & {
+          highlevelToken?: string;
+        };
+        return { ...DEFAULT_SETTINGS, ...safe };
+      }
     } catch (e) {
       console.error('getSettings failed, using defaults:', e);
     }

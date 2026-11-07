@@ -57,12 +57,7 @@ export default async function ContactPage() {
           <ContactForm
             webhookUrl={settings.webhookUrl}
             companyName={settings.companyName}
-            highlevelToken={settings.highlevelToken}
-            highlevelLocationId={settings.highlevelLocationId}
-            highlevelMessageFieldKey={settings.highlevelMessageFieldKey}
-            highlevelPipelineId={settings.highlevelPipelineId}
-            highlevelPipelineStageId={settings.highlevelPipelineStageId}
-            notificationEmail={settings.notificationEmail}
+            highlevelEnabled={Boolean(settings.highlevelLocationId)}
           />
         </div>
       </div>
