@@ -14,10 +14,12 @@ export function Footer({
   logoImage,
   companyName,
   phone,
+  email,
 }: {
   logoImage: string;
   companyName: string;
   phone: string;
+  email: string;
 }) {
   return (
     <footer className="bg-white border-t border-neutral-100 py-16">
@@ -44,7 +46,8 @@ export function Footer({
         </div>
         <div className="text-center md:text-right">
           <p className="text-neutral-400 text-[10px] uppercase font-bold tracking-widest mb-2">Contact</p>
-          <p className="font-bold text-lake">{phone}</p>
+          <p className="font-bold text-lake"><a href={`tel:${phone}`}>{phone}</a></p>
+          <p className="font-bold text-lake"><a href={`mailto:${email}`}>{email}</a></p>
         </div>
       </div>
     </footer>
