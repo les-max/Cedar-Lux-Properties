@@ -49,11 +49,8 @@ export async function POST(req: Request) {
   });
 
   if (!contactRes.ok) {
-    const errorBody = await contactRes.text();
-    return NextResponse.json(
-      { error: 'HighLevel contact creation failed', detail: errorBody },
-      { status: contactRes.status }
-    );
+    console.error('HighLevel contact creation failed:', contactRes.status, await contactRes.text());
+    return NextResponse.json({ error: 'HighLevel contact creation failed' }, { status: 502 });
   }
 
   const contactData = await contactRes.json();

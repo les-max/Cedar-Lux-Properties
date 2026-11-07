@@ -695,7 +695,7 @@ export const PropertyAdmin: React.FC<PropertyAdminProps> = ({
                                     onChange={e => setTempSettings({...tempSettings, webhookUrl: e.target.value})}
                                     placeholder="https://hooks.zapier.com/v1/event/..."
                                 />
-                                <p className="text-[10px] text-neutral-400">Used only if HighLevel token is not set.</p>
+                                <p className="text-[10px] text-neutral-400">Used only if HighLevel is not connected.</p>
                             </div>
                             <div className="space-y-2">
                                 <label className="text-xs font-bold uppercase text-neutral-400">Header Scripts (Analytics, Pixel, etc.)</label>

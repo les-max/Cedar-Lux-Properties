@@ -10,5 +10,9 @@ declare global {
 /** Sends a GA4 event. No-op on the server or when gtag is blocked or missing. */
 export function trackEvent(name: string, params?: GtagEventParams): void {
   if (typeof window === 'undefined' || typeof window.gtag !== 'function') return;
-  window.gtag('event', name, params);
+  try {
+    window.gtag('event', name, params);
+  } catch {
+    // Analytics must never interrupt the page, especially a lead submission.
+  }
 }

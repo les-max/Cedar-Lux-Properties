@@ -57,7 +57,7 @@ export default async function ContactPage() {
           <ContactForm
             webhookUrl={settings.webhookUrl}
             companyName={settings.companyName}
-            highlevelEnabled={Boolean(settings.highlevelLocationId)}
+            highlevelEnabled={Boolean(process.env.HIGHLEVEL_TOKEN && settings.highlevelLocationId)}
           />
         </div>
       </div>
